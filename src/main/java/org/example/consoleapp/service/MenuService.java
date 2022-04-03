@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
+import org.example.consoleapp.command.factory.CommandDefiner;
 import org.example.consoleapp.entity.Location;
 import org.example.consoleapp.service.factory.ServiceFactory;
 
@@ -18,6 +19,10 @@ public class MenuService {
     public MenuService() {
         this.scanner = new Scanner(System.in);
         this.menuHierarchy = new HashMap<>();
+    }
+
+    public String getSelectedOption() {
+        return selectedOption;
     }
 
     public MenuService writeMenuToMap() {
@@ -35,10 +40,11 @@ public class MenuService {
         return this;
     }
 
-    public void getOptionSelection() {
+    public CommandDefiner getOptionSelection() {
         printToConsole("Input a number of the described options");
         selectedOption = scanner.next();
         printToConsole("you've selected the option : " + selectedOption);
+        return CommandDefiner.getInstance();
     }
 
     public MenuService printMenu() {

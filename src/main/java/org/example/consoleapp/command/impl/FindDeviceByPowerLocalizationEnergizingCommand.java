@@ -18,6 +18,11 @@ public class FindDeviceByPowerLocalizationEnergizingCommand extends BaseCommand 
 
     @Override
     public void execute() {
+        System.out.println(this.toString());
+    }
 
+    @Override
+    public String toString() {
+        return "FindDeviceByPowerLocalizationEnergizingCommand";
     }
 }

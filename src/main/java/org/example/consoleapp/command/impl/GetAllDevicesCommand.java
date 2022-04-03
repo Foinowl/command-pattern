@@ -6,6 +6,11 @@ import org.example.consoleapp.command.Command;
 public class GetAllDevicesCommand extends BaseCommand implements Command {
     @Override
     public void execute() {
+        System.out.println(this.toString());
+    }
 
+    @Override
+    public String toString() {
+        return "GetAllDevicesCommand";
     }
 }

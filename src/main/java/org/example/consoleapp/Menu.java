@@ -20,7 +20,10 @@ public class Menu {
                 .getMenu()
                 .writeMenuToMap()
                 .printMenu()
-                .getOptionSelection();
+                .getOptionSelection()
+                .getCommand(ServiceFactory.getInstance().getMenuService().getSelectedOption())
+                .execute();
+
         }
     }
 }

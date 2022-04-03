@@ -8,13 +8,16 @@ import org.example.consoleapp.command.impl.FindDeviceByPowerLocalizationEnergizi
 import org.example.consoleapp.command.impl.GetAllDevicesCommand;
 import org.example.consoleapp.command.impl.PlugInDeviceCommand;
 import org.example.consoleapp.command.impl.PowerCalculationCommand;
+import org.example.consoleapp.command.impl.UndefinedCommand;
 import org.example.consoleapp.service.MenuService;
 import org.example.consoleapp.service.factory.ServiceFactory;
 
 public class CommandDefiner {
     private static final CommandDefiner instance = new CommandDefiner();
+
+    private final MenuService menuService = ServiceFactory.getInstance().getMenuService();
+
     private Command command;
-    private MenuService menuService = ServiceFactory.getInstance().getMenuService();
 
     public CommandDefiner() {
     }
@@ -52,7 +55,7 @@ public class CommandDefiner {
                     menuService.requestForEnergizing());
                 break;
             default:
-                System.out.println("There is not found such command with id - " + commandId);
+                command = new UndefinedCommand();
         }
         return command;
     }
