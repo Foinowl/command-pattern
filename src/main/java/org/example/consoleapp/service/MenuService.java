@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
+import org.example.consoleapp.entity.Location;
 import org.example.consoleapp.service.factory.ServiceFactory;
 
 public class MenuService {
@@ -49,5 +50,18 @@ public class MenuService {
 
     private void printToConsole(String line) {
         System.out.println(line);
+    }
+
+
+    public int requestForPowerInput() {
+        return 0;
+    }
+
+    public Location requestForLocationInput() {
+        return Location.BAD_ROOM;
+    }
+
+    public boolean requestForEnergizing() {
+        return false;
     }
 }
