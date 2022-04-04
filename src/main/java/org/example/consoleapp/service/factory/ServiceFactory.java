@@ -1,6 +1,7 @@
 package org.example.consoleapp.service.factory;
 
 import java.util.Properties;
+import org.example.consoleapp.service.CommandService;
 import org.example.consoleapp.service.JsonService;
 import org.example.consoleapp.service.MenuService;
 import org.example.consoleapp.service.PropertyService;
@@ -14,10 +15,13 @@ public class ServiceFactory {
 
     private final JsonService jsonService;
 
+    private final CommandService commandService;
+
     public ServiceFactory() {
         this.menuService = new MenuService();
         this.propertyService = new PropertyService(new Properties());
         this.jsonService = new JsonService();
+        this.commandService = new CommandService();
     }
 
     public static ServiceFactory getInstance() {
@@ -34,5 +38,9 @@ public class ServiceFactory {
 
     public PropertyService getPropertyService() {
         return propertyService;
+    }
+
+    public CommandService getCommandService() {
+        return commandService;
     }
 }

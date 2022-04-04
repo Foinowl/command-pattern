@@ -14,6 +14,9 @@ public class Device {
         this.energized = energized;
     }
 
+    public Device() {
+    }
+
     public String getDeviceName() {
         return deviceName;
     }
