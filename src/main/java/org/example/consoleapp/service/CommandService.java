@@ -1,9 +1,12 @@
 package org.example.consoleapp.service;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 import org.example.consoleapp.entity.Device;
 import org.example.consoleapp.entity.Location;
 import org.example.consoleapp.service.factory.ServiceFactory;
@@ -115,5 +118,16 @@ public class CommandService {
             }
         }
         return totalPowerCalculated;
+    }
+
+    public Map<String, Device> sortByPower(Map<String, Device> deviceHashMap) {
+        Comparator<HashMap.Entry<String, Device>> valueComparator =
+            Comparator.comparingInt(e -> e.getValue().getPowerConsumption());
+        HashMap<String, Device> sortedMap =
+            deviceHashMap.entrySet().stream().
+                sorted(valueComparator).
+                collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                    (e1, e2) -> e1, LinkedHashMap::new));
+        return sortedMap;
     }
 }
