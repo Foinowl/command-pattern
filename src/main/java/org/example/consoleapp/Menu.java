@@ -16,6 +16,8 @@ public class Menu {
 
     public void runMenu() {
         while (true) {
+            System.out.println("   ");
+            System.out.println("----------------------------------------");
             menuService
                 .getMenu()
                 .writeMenuToMap()

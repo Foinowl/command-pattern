@@ -4,7 +4,7 @@ public enum Location {
     KITCHEN("Kitchen"),
     HALL("Hall"),
     LIVING_ROOM("Living room"),
-    BAD_ROOM("Bad room"),
+    BED_ROOM("Bed room"),
     CABINET("Cabinet");
 
     private final String roomName;

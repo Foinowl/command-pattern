@@ -1,6 +1,5 @@
 package org.example.consoleapp.service;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -11,9 +10,13 @@ import org.example.consoleapp.service.factory.ServiceFactory;
 
 public class MenuService {
     private final Scanner scanner;
+
     private final String MENU_FILE_PROPERTIES = "menu.properties";
+
     private final Map<String, String> menuHierarchy;
+
     private Properties properties;
+
     private String selectedOption;
 
     public MenuService() {
@@ -60,14 +63,65 @@ public class MenuService {
 
 
     public int requestForPowerInput() {
-        return 0;
+        int powerEntered = 0;
+        boolean inputIsWrong = true;
+        while (inputIsWrong) {
+            try {
+                printToConsole("Enter the power value to search for a device close to it");
+                powerEntered = scanner.nextInt();
+            } catch (Exception e) {
+                printToConsole("Input is wrong please type an integer type!!!");
+                scanner.next();
+                continue;
+            }
+            inputIsWrong = false;
+        }
+        return powerEntered;
     }
 
     public Location requestForLocationInput() {
-        return Location.BAD_ROOM;
+        int selectedLocationId = 0;
+        boolean inputIsWrong = true;
+        while (inputIsWrong) {
+            try {
+                printToConsole("Select the device location fromm the list bellow");
+                for (int i = 0; i < Location.values().length; i++) {
+                    printToConsole((i + 1) + ". " + Location.values()[i].name());
+                }
+                printToConsole("enter an ID of Location from 1 to " + Location.values().length);
+                selectedLocationId = scanner.nextInt();
+            } catch (Exception e) {
+                printToConsole("Input is wrong please type an integer type!!!");
+                scanner.next();
+                continue;
+            }
+            if (selectedLocationId > Location.values().length) {
+                printToConsole("Please enter a number within a range (0-" + Location.values().length + ")");
+            }
+            inputIsWrong = false;
+        }
+        return Location.values()[selectedLocationId - 1];
     }
 
+
     public boolean requestForEnergizing() {
-        return false;
+        boolean answer = false;
+        boolean doWhileCycle = true;
+        while (doWhileCycle) {
+            printToConsole("Does the device should be energized? Enter y or n");
+            switch (scanner.next()) {
+                case ("y"):
+                    answer = true;
+                    break;
+                case ("n"):
+                    answer = false;
+                    break;
+                default:
+                    printToConsole("Please answer y(Y) or n(N), try again...");
+                    continue;
+            }
+            doWhileCycle = false;
+        }
+        return answer;
     }
 }

@@ -28,6 +28,10 @@ public class ServiceFactory {
         return menuService;
     }
 
+    public JsonService getJsonService() {
+        return jsonService;
+    }
+
     public PropertyService getPropertyService() {
         return propertyService;
     }
