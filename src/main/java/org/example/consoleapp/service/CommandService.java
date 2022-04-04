@@ -45,20 +45,18 @@ public class CommandService {
     }
 
 
-    public CommandService findByPower(Map<String, Device> deviceMap, int power) {
+    public Device findByPower(Map<String, Device> deviceHashMap, Integer power) {
         resultMap.clear();
-        for (Map.Entry entry : deviceMap.entrySet()) {
+        for (Map.Entry entry : deviceHashMap.entrySet()) {
             //iterating within whole power consumption rates of all devices and subtracting the selected power and rated power
             int diff = Math.abs(((Device) entry.getValue()).getPowerConsumption() - power);
             //storing in sorted map -> result of subtract(less value is closet value to selected power) put as key,
             // key of deviceHashMap put to value
             resultMap.put(diff, ((String) entry.getKey()));
         }
-        if (!resultMap.isEmpty()) {
-            deviceWithClosestPower = deviceMap.get(resultMap.values().toArray()[0]);
-        }
-        return this;
+        return deviceHashMap.get(resultMap.values().toArray()[0]);
     }
+
 
     public CommandService sortByLocation(Map<String, Device> deviceMap, Location location) {
         deviceMapsSortedByLocation.clear();
