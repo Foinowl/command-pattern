@@ -1,5 +1,6 @@
 package org.example.consoleapp.command.factory;
 
+import org.apache.log4j.Logger;
 import org.example.consoleapp.command.Command;
 import org.example.consoleapp.command.impl.DeviceSortCommand;
 import org.example.consoleapp.command.impl.FindDeviceByPowerCommand;
@@ -13,6 +14,7 @@ import org.example.consoleapp.service.MenuService;
 import org.example.consoleapp.service.factory.ServiceFactory;
 
 public class CommandDefiner {
+    private final Logger LOGGER = Logger.getLogger(CommandDefiner.class);
     private static final CommandDefiner instance = new CommandDefiner();
 
     private final MenuService menuService = ServiceFactory.getInstance().getMenuService();
@@ -32,7 +34,7 @@ public class CommandDefiner {
                 command = new GetAllDevicesCommand();
                 break;
             case ("2"):
-                command = new PlugInDeviceCommand();
+                command = new PlugInDeviceCommand(menuService.requestForId());
                 break;
             case ("3"):
                 command = new PowerCalculationCommand();
@@ -57,6 +59,7 @@ public class CommandDefiner {
             default:
                 command = new UndefinedCommand();
         }
+        LOGGER.info(command.toString() + " selected");
         return command;
     }
 }

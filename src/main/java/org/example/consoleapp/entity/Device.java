@@ -1,5 +1,7 @@
 package org.example.consoleapp.entity;
 
+import java.util.Objects;
+
 public class Device {
     private String deviceName;
     private Location location;
@@ -47,6 +49,22 @@ public class Device {
 
     public void setEnergized(final boolean energized) {
         this.energized = energized;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Device device = (Device) o;
+        return powerConsumption == device.powerConsumption &&
+            energized == device.energized &&
+            Objects.equals(deviceName, device.deviceName) &&
+            location == device.location;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(deviceName, location, powerConsumption, energized);
     }
 
     @Override

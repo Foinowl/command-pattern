@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
+import org.apache.log4j.Logger;
 import org.example.consoleapp.command.factory.CommandDefiner;
 import org.example.consoleapp.entity.Location;
 import org.example.consoleapp.service.factory.ServiceFactory;
 
 public class MenuService {
+    private final Logger LOGGER = Logger.getLogger(MenuService.class);
+
     private final Scanner scanner;
 
     private final String MENU_FILE_PROPERTIES = "menu.properties";
@@ -18,6 +21,9 @@ public class MenuService {
     private Properties properties;
 
     private String selectedOption;
+
+    private String selectedId;
+
 
     public MenuService() {
         this.scanner = new Scanner(System.in);
@@ -70,6 +76,7 @@ public class MenuService {
                 printToConsole("Enter the power value to search for a device close to it");
                 powerEntered = scanner.nextInt();
             } catch (Exception e) {
+                LOGGER.error("Input is wrong please type an integer type!!!",e);
                 printToConsole("Input is wrong please type an integer type!!!");
                 scanner.next();
                 continue;
@@ -91,6 +98,7 @@ public class MenuService {
                 printToConsole("enter an ID of Location from 1 to " + Location.values().length);
                 selectedLocationId = scanner.nextInt();
             } catch (Exception e) {
+                LOGGER.error("Input is wrong please type an integer type!!!",e);
                 printToConsole("Input is wrong please type an integer type!!!");
                 scanner.next();
                 continue;
@@ -124,4 +132,27 @@ public class MenuService {
         }
         return answer;
     }
+
+    /**
+     * Methods provides the requesting dialog of the desired device ID
+     *
+     * @return selected ID
+     */
+    public String requestForId() {
+        String selectedId = "";
+        boolean doWhileCycle = true;
+        while (doWhileCycle) {
+            ServiceFactory.getInstance().getCommandService().getAllDevices(ServiceFactory.getInstance().getJsonService().getListOfDevicesFromJsonFile());
+            printToConsole("Input an ID of the device listed above:");
+            selectedId = scanner.next();
+            if (ServiceFactory.getInstance().getJsonService().getListOfDevicesFromJsonFile().containsKey(selectedId)) {
+                return selectedId;
+            } else {
+                printToConsole("There is now such id, try again");
+                continue;
+            }
+        }
+        return selectedId;
+    }
+
 }

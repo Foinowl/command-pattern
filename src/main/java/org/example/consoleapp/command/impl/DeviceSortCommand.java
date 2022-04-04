@@ -1,9 +1,7 @@
 package org.example.consoleapp.command.impl;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.example.consoleapp.command.BaseCommand;
@@ -22,6 +20,7 @@ public class DeviceSortCommand extends BaseCommand implements Command {
 
         for (Map.Entry<String, Device> entry : sortedDevices.entrySet()) {
             System.out.println(entry.getKey() + " -- " + entry.getValue());
+            LOGGER.info(entry.getKey() + ". " + entry.getValue());
         }
     }
 

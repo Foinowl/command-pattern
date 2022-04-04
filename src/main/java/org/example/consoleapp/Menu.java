@@ -25,7 +25,6 @@ public class Menu {
                 .getOptionSelection()
                 .getCommand(ServiceFactory.getInstance().getMenuService().getSelectedOption())
                 .execute();
-
         }
     }
 }

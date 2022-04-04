@@ -25,7 +25,7 @@ public class FindDeviceByPowerLocalizationEnergizingCommand extends BaseCommand 
 
         ServiceFactory.getInstance().getCommandService()
             .sortByLocation(devices, location)
-            .sortByEnergizing(ServiceFactory.getInstance().getCommandService().getDeviceMapsSortedByLocation(), energizing)
+            .filterByEnergizing(ServiceFactory.getInstance().getCommandService().getDeviceMapsSortedByLocation(), energizing)
             .findByPower(ServiceFactory.getInstance().getCommandService().getDeviceMapsSortedByEnergizing(), power);
 
         if (ServiceFactory.getInstance().getCommandService().getDeviceWithClosestPower().getDeviceName() != null) {
