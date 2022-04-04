@@ -4,14 +4,18 @@ import org.example.consoleapp.service.MenuService;
 import org.example.consoleapp.service.factory.ServiceFactory;
 
 public class Menu {
-    private final static Menu instance = new Menu();
-    private final MenuService menuService = ServiceFactory.getInstance().getMenuService();
+    private static Menu INSTANCE;
+    private final MenuService menuService;
 
-    public Menu() {
+    private Menu(MenuService menuService) {
+        this.menuService = menuService;
     }
 
-    public static Menu getInstance() {
-        return instance;
+    public static Menu of() {
+        if (INSTANCE == null) {
+            INSTANCE = new Menu(ServiceFactory.getInstance().getMenuService());
+        }
+        return INSTANCE;
     }
 
     public void runMenu() {

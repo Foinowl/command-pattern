@@ -99,11 +99,11 @@ public class CommandService {
     }
 
     public Map<String, Device> plugInDevice(Map<String, Device> deviceMap, String id) {
-        for (Map.Entry entry : deviceMap.entrySet()) {
+        Map<String, Device> devices = Map.copyOf(deviceMap);
+        for (Map.Entry entry : devices.entrySet()) {
             if (((String) entry.getKey()).contentEquals(id)) {
                 device = ((Device) entry.getValue());
                 device.setEnergized(true);
-                entry.setValue(device);
             }
         }
         ServiceFactory.getInstance().getCommandService().getAllDevices(deviceMap);

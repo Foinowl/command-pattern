@@ -12,6 +12,16 @@ import org.example.consoleapp.service.factory.ServiceFactory;
 public class MenuService {
     private final Logger LOGGER = Logger.getLogger(MenuService.class);
 
+    private final JsonService jsonService;
+
+    private final PropertyService propertyService;
+
+    private final CommandService commandService;
+
+    private final StoreService storeService;
+
+    private final CommandDefiner commandDefiner;
+
     private final Scanner scanner;
 
     private final String MENU_FILE_PROPERTIES = "menu.properties";
@@ -24,8 +34,15 @@ public class MenuService {
 
     private String selectedId;
 
+    public MenuService(final PropertyService propertyService,
+                       final JsonService jsonService,
+                       final CommandService commandService){
+        this.propertyService = propertyService;
+        this.jsonService = jsonService;
+        this.commandService = commandService;
+        this.storeService = new StoreService(jsonService);
+        this.commandDefiner = new CommandDefiner(this);
 
-    public MenuService() {
         this.scanner = new Scanner(System.in);
         this.menuHierarchy = new HashMap<>();
     }
@@ -42,10 +59,7 @@ public class MenuService {
     }
 
     public MenuService getMenu() {
-        properties = ServiceFactory
-            .getInstance()
-            .getPropertyService()
-            .readFromPropertiesFile(MENU_FILE_PROPERTIES);
+        properties = propertyService.readFromPropertiesFile(MENU_FILE_PROPERTIES);
         return this;
     }
 
@@ -53,7 +67,7 @@ public class MenuService {
         printToConsole("Input a number of the described options");
         selectedOption = scanner.next();
         printToConsole("you've selected the option : " + selectedOption);
-        return CommandDefiner.getInstance();
+        return commandDefiner;
     }
 
     public MenuService printMenu() {
@@ -142,10 +156,10 @@ public class MenuService {
         String selectedId = "";
         boolean doWhileCycle = true;
         while (doWhileCycle) {
-            ServiceFactory.getInstance().getCommandService().getAllDevices(ServiceFactory.getInstance().getJsonService().getListOfDevicesFromJsonFile());
+            commandService.getAllDevices(storeService.getDevices());
             printToConsole("Input an ID of the device listed above:");
             selectedId = scanner.next();
-            if (ServiceFactory.getInstance().getJsonService().getListOfDevicesFromJsonFile().containsKey(selectedId)) {
+            if (storeService.getDevices().containsKey(selectedId)) {
                 return selectedId;
             } else {
                 printToConsole("There is now such id, try again");
@@ -154,5 +168,4 @@ public class MenuService {
         }
         return selectedId;
     }
-
 }

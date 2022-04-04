@@ -11,21 +11,16 @@ import org.example.consoleapp.command.impl.PlugInDeviceCommand;
 import org.example.consoleapp.command.impl.PowerCalculationCommand;
 import org.example.consoleapp.command.impl.UndefinedCommand;
 import org.example.consoleapp.service.MenuService;
-import org.example.consoleapp.service.factory.ServiceFactory;
 
 public class CommandDefiner {
     private final Logger LOGGER = Logger.getLogger(CommandDefiner.class);
-    private static final CommandDefiner instance = new CommandDefiner();
 
-    private final MenuService menuService = ServiceFactory.getInstance().getMenuService();
+    private final MenuService menuService;
 
     private Command command;
 
-    public CommandDefiner() {
-    }
-
-    public static CommandDefiner getInstance() {
-        return instance;
+    public CommandDefiner(final MenuService menuService) {
+        this.menuService = menuService;
     }
 
     public Command getCommand(String commandId) {

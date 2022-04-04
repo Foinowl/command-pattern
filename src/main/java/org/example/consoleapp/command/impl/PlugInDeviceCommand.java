@@ -14,7 +14,7 @@ public class PlugInDeviceCommand extends BaseCommand implements Command {
     @Override
     public void execute() {
         System.out.println("Requested id -> " + id);
-        ServiceFactory.getInstance().getJsonService().storeMapToJson(
+        ServiceFactory.getInstance().getStoreService().storeMapToJson(
             ServiceFactory.getInstance().getCommandService().plugInDevice(devices, id));
     }
 
